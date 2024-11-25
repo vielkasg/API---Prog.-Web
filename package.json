@@ -1,0 +1,18 @@
+{
+  "name": "api-progweb",
+  "version": "1.0.0",
+  "description": "API con NodeJS y Express.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "API---Prog.-Web"
+  },
+  "author": "Vielka Sanchez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
