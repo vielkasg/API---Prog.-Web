@@ -28,4 +28,47 @@ routerMatematicas.get('/:tema/:nivel', (req, res) => {
     res.send(JSON.stringify(resultados));
 })
 
+routerMatematicas.post('/crearcurso', (req, res) =>{
+    const {body} = req;
+    matematicas.push(body);
+    res.send(JSON.stringify(matematicas));
+ })
+
+ routerMatematicas.put('/editarcurso/:id', (req, res) =>{
+    const {body} = req;
+    const id = req.params.id;
+
+    const indice = matematicas.findIndex (curso => curso.id = id);
+
+    if (indice >= 0){
+        matematicas[indice] = body;
+    }
+    res.send(JSON.stringify(matematicas));
+ })
+
+ routerMatematicas.patch('/modificarcurso/:id', (req, res) =>{
+    const {body} = req;
+    const id = req.params.id;
+
+    const indice = matematicas.findIndex (curso => curso.id = id);
+
+    if (indice >= 0){
+        matematicas[indice] = body;
+    }
+    res.send(JSON.stringify(matematicas));
+ })
+
+ routerMatematicas.delete('/eliminarcurso/:id', (req, res) =>{
+    const {body} = req;
+    const id = req.params.id;
+
+    const indice = matematicas.findIndex (curso => curso.id = id);
+
+    if (indice >= 0){
+        matematicas.splice(indice, 1) ;
+    }
+    res.send(JSON.stringify(matematicas));
+ })
+
+
 module.exports = routerMatematicas;

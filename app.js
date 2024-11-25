@@ -3,6 +3,9 @@ const app = express()
 
 const {infoCursos} = require('./datos/cursos.js')
 
+//MiddelWare este apartado funciona para hacer las peticiones de tipo post, cambiar data para el Backend
+app.use(express.json())
+
 //routers
 const routerProgramacion = require('./routers/programacion.js');
 app.use('/api/cursos/programacion', routerProgramacion);

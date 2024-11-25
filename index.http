@@ -1,0 +1,21 @@
+POST http://localhost:3000/api/cursos/programacion/crearcurso HTTP/1.1
+Content-Type: application/json
+
+{           
+    id: 4,
+    titulo: 'Aprende React.js',
+    lenguaje: 'react.js', 
+    vistas: 104673,
+    nivel: 'intermedio'
+}
+
+POST http://localhost:3000/api/cursos/matematicas/crearcurso HTTP/1.1
+Content-Type: application/json
+
+{
+    id: 3,
+    titulo: 'Aprende Vectores',
+    tema: 'Vectores',
+    vistas: 17722,
+    nivel: 'intermedio'
+}
