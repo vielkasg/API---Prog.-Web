@@ -3,6 +3,13 @@ const app = express()
 
 const {infoCursos} = require('./cursos.js')
 
+//routers
+const routerProgramacion = express.Router();
+app.use('/api/cursos/programacion', routerProgramacion);
+
+const routerMatematicas = express.Router();
+app.use('/api/cursos/matematicas', routerMatematicas);
+
 //routing - rutas
 
 app.get('/', (req, res) => {
@@ -17,13 +24,14 @@ app.get('/api/cursos/programacion', (req, res) => {
     res.send(infoCursos.programacion)
 })
 
+
 app.get('/api/cursos/matematicas', (req, res) => {
     res.send(infoCursos.matematicas)
 })
 
 //cursos de programacion 
 
-app.get('/api/cursos/programacion/:lenguaje', (req, res) => {
+routerProgramacion.get('/:lenguaje', (req, res) => {
     const lenguaje = req.params.lenguaje
     const resultados = infoCursos.programacion.filter(curso => curso.lenguaje === lenguaje)
 
@@ -31,10 +39,14 @@ app.get('/api/cursos/programacion/:lenguaje', (req, res) => {
         return res.status(404).send(`No se encontraron cursos de ${lenguaje}.`)
     }
 
-    res.send(resultados)
+    if (req.query.ordenar === 'vistas') {
+        return res.send(JSON.stringify(resultados.sort((a, b) => b.vistas - a.vistas)));
+    }
+
+    res.send(JSON.stringify(resultados));
 })
 
-app.get('/api/cursos/programacion/:lenguaje/:nivel', (req, res) => {
+routerProgramacion.get('/:lenguaje/:nivel', (req, res) => {
     const lenguaje = req.params.lenguaje
     const nivel = req.params.nivel
 
@@ -44,12 +56,12 @@ app.get('/api/cursos/programacion/:lenguaje/:nivel', (req, res) => {
         return res.status(404).send(`No se encontraron cursos de ${lenguaje} de nivel ${nivel}.`)
     }
 
-    res.send(resultados)
+    res.send(JSON.stringify(resultados));
 })
 
 //cursos de matematica
 
-app.get('/api/cursos/matematicas/:tema', (req, res) => {
+routerMatematicas.get('/:tema', (req, res) => {
     const tema = req.params.tema
     const resultados = infoCursos.matematicas.filter(curso => curso.tema === tema)
 
@@ -57,10 +69,10 @@ app.get('/api/cursos/matematicas/:tema', (req, res) => {
         return res.status(404).send(`No se encontraron cursos de ${tema}.`)
     }
 
-    res.send(resultados)
+    res.send(JSON.stringify(resultados));
 })
 
-app.get('/api/cursos/matematicas/:tema/:nivel', (req, res) => {
+routerMatematicas.get('/:tema/:nivel', (req, res) => {
     const tema = req.params.tema
     const nivel = req.params.nivel
 
@@ -70,7 +82,7 @@ app.get('/api/cursos/matematicas/:tema/:nivel', (req, res) => {
         return res.status(404).send(`No se encontraron cursos de ${tema} de nivel ${nivel}.`)
     }
 
-    res.send(resultados)
+    res.send(JSON.stringify(resultados));
 })
 
 //Se define el puerto
