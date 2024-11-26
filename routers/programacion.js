@@ -5,6 +5,8 @@ const {programacion} = require ('../datos/cursos.js').infoCursos;
 
 const routerProgramacion = express.Router();
 
+routerProgramacion.use(express.json());
+
 routerProgramacion.get('/:lenguaje', (req, res) => {
     const lenguaje = req.params.lenguaje
     const resultados = programacion.filter(curso => curso.lenguaje === lenguaje)
@@ -33,48 +35,50 @@ routerProgramacion.get('/:lenguaje/:nivel', (req, res) => {
     res.send(JSON.stringify(resultados));
 })
 
+//POST
+routerProgramacion.post('/', (req, res) => {
+   let cursoNuevo = req.body;
+   programacion.push(cursoNuevo);
 
-routerProgramacion.post('/crearcurso', (req, res) =>{
-   const {body} = req;
-   programacion.push(body);
-   res.send(JSON.stringify(programacion));
+   res.send(JSON.stringify(cursoNuevo));
 })
 
-routerProgramacion.put('/editarcurso/:id', (req, res) =>{
-    const {body} = req;
+//PUT
+routerProgramacion.put('/:id', (req, res) => {
+    const cursoActualizado = req.body;
     const id = req.params.id;
 
-    const indice = programacion.findIndex (curso => curso.id = id);
+    const indice = programacion.findIndex(curso => curso.id == id);
 
-    if (indice >= 0){
-        programacion[indice] = body;
+    if (indice >= 0) {
+        programacion[indice] = cursoActualizado
     }
     res.send(JSON.stringify(programacion));
- })
+})
 
- routerProgramacion.patch('/modificarcurso/:id', (req, res) =>{
-    const {body} = req;
+routerProgramacion.patch('/:id', (req, res) => {
+    const infoActualizada = req.body;
     const id = req.params.id;
 
-    const indice = programacion.findIndex (curso => curso.id = id);
+    const indice = programacion.findIndex(curso => curso.id == id);
 
-    if (indice >= 0){
-        programacion[indice] = body;
+    if (indice >= 0) {
+        const cursoAModificar = programacion[indice];
+        Object.assign(cursoAModificar, infoActualizada);
     }
-    res.send(JSON.stringify(programacion));
- })
+    res.send(JSON.stringify(programacion))
+});
 
- routerProgramacion.delete('/eliminarcurso/:id', (req, res) =>{
-    const {body} = req;
+
+routerProgramacion.delete('/:id', (req, res) => {
     const id = req.params.id;
 
-    const indice = programacion.findIndex (curso => curso.id = id);
+    const indice = programacion.findIndex(curso => curso.id == id);
 
-    if (indice >= 0){
-        programacion.splice(indice, 1) ;
+    if (indice >=0){
+        programacion.splice(indice, 1);
     }
     res.send(JSON.stringify(programacion));
- })
- 
+});
 
 module.exports = routerProgramacion;
