@@ -56,6 +56,7 @@ routerProgramacion.put('/:id', (req, res) => {
     res.send(JSON.stringify(programacion));
 })
 
+//PATCH
 routerProgramacion.patch('/:id', (req, res) => {
     const infoActualizada = req.body;
     const id = req.params.id;
@@ -70,6 +71,7 @@ routerProgramacion.patch('/:id', (req, res) => {
 });
 
 
+//DELTE
 routerProgramacion.delete('/:id', (req, res) => {
     const id = req.params.id;
 
