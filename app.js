@@ -32,6 +32,7 @@ app.get('/api/cursos/matematicas', (req, res) => {
     res.send(infoCursos.matematicas)
 })
 
+
 //Se define el puerto
 const PUERTO = process.env.PORT || 3000
 
